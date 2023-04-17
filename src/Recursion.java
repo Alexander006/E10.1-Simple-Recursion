@@ -3,11 +3,21 @@ import java.util.Arrays;
 public class Recursion {
 
 	public static int factorial(int n) {
-		return 0;
+		if(n == 0)
+			return 1;
+
+		return n * factorial(n - 1);
 	}
 
 	public static boolean isEven(int n) {
-		return false;
+
+		if (n == 0)
+			return true;
+
+		if(n == 1)
+			return false;
+
+		return isEven(n - 2);
 	}
 
 	public static int sum(int[] numbers) {
@@ -15,7 +25,11 @@ public class Recursion {
 	}
 
 	private static int sum(int[] numbers, int index) {
-		return 0;
+		if(index > numbers.length-1)
+			return 0;
+
+		int value = numbers[index];
+		return value + sum(numbers,index + 1);
 	}
 
 	public static int max(int[] numbers) {
@@ -23,11 +37,24 @@ public class Recursion {
 	}
 
 	private static int max(int[] numbers, int index) {
-		return 0;
+		if(index > numbers.length - 1)
+			return 0;
+
+		int maxValue = max(numbers,index + 1);
+
+		return Math.max(numbers[index],maxValue);
 	}
 
 	public static boolean isPalindrome(String phrase) {
-		return false;
+		phrase.replaceAll(" ","");
+		if(phrase.length() == 0 || phrase.length() == 1)
+			return true;
+
+		if(phrase.charAt(0) != phrase.charAt(phrase.length() - 1)) return false;
+		char[] letters = phrase.toCharArray();
+		String shorter = phrase.substring(1,phrase.length() -1);
+
+		return isPalindrome(shorter);
 	}
 
 	/**
@@ -52,7 +79,17 @@ public class Recursion {
 		 * 4. Concatenate the left and right arrays and return the result.
 		 */
 
-		return elements;
+
+		if(end - start == 1){
+			return Arrays.copyOfRange(elements,start,start+1);
+		}
+
+		int mid = (start + end) /2;
+
+		T[] left = slice(elements,start,mid);
+		T[] right = slice(elements,mid,end);
+
+		return concatenateArrays(left, right);
 	}
 
 	/**
